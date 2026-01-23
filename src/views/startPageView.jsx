@@ -1,15 +1,27 @@
 export function StartPageView(props) {
 
-    function addNewPersonACB(){
+    function showAddNewPersonACB(){
         props.onShowPersonInput();
+    }
+
+    function cancelPersonACB(){
+        props.onCancelPerson();
+    }
+
+    function addNewPersonACB(){
+        props.onAddNewPerson();
     }
 
     function personInputACB(e) {
         props.onPersonInputChange(e.target.value);
     }
 
-    function addNewExpenseACB(){
+    function showAddNewExpenseACB(){
         props.onShowExpenseInput();
+    }
+
+    function addNewExpenseACB(){
+        props.onAddNewExpense();
     }
 
     function cancelExpenseACB(){
@@ -29,7 +41,9 @@ export function StartPageView(props) {
     }
 
     function participantsToggleACB(person) {
-        props.onToggleParticipants(person);
+        return function () {
+            props.onToggleParticipants(person);
+        };
     }
 
     function renderPeopleOptionsCB(person) {
@@ -46,7 +60,7 @@ export function StartPageView(props) {
                 <input
                     type="checkbox"
                     checked={(props.selectedParticipants || []).includes(person)}
-                    onChange={participantsToggleACB}
+                    onChange={participantsToggleACB(person)}
                 />
                 {person}
             </label>
@@ -58,22 +72,28 @@ export function StartPageView(props) {
             <h1>Expense splitter</h1>
 
             <p>
-                An app that can help you split expesnes between you and your friends, family or anyone. 
+                An app that can help you split expenes between you and your friends, family or anyone. 
                 Just input the people you want to split the expenses with, what the expenses are, and 
                 how much they cost, and expense splitter will take care of the rest for you!
             </p>
 
-            <button onClick={addNewPersonACB}>Add new person</button>
+            <button onClick={showAddNewPersonACB}>Add new person</button>
 
             {props.showPersonInput && (
-                <input
-                    value={props.newPerson || ""}
-                    onChange={personInputACB}
-                    placeholder="Enter name"
-                />
+                <div>
+                    <input
+                        value={props.newPerson || ""}
+                        onChange={personInputACB}
+                        placeholder="Enter name"
+                    />
+
+                    <button onClick={addNewPersonACB}>Add</button>
+                    <button onClick={cancelPersonACB} type="button">Cancel</button>
+                </div>
             )}
 
-            <button onClick={addNewExpenseACB}>Add new expense</button>
+
+            <button onClick={showAddNewExpenseACB}>Add new expense</button>
 
             {props.showExpenseInput && (
                 <div>

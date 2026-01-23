@@ -1,18 +1,25 @@
-import { StartPageView } from "../../views/startPageView";
+import { StartPageView } from "../views/startPageView";
 
 export function StartPage(props) {
-    //for people
+    //show people form
     function handleShowPersonInputACB() {
         props.model.showPersonInput = true;
     }
 
-    //check if add new person and handle person input are the same?
+    //for when user is typing (draft)
     function handlePersonInputACB(person) {
         props.model.newPerson = person;
     }
 
+    //adding a new person
     function handleAddNewPersonACB() {
-        props.model.addPerson();
+        props.model.addNewPerson();
+    }
+
+    //cancel adding a new person
+    function handleCancelPersonACB() {
+        // put this in model function together with resetting input fields: props.model.showPersonInput = false;
+        props.model.cancelPerson();
     }
 
     //for expenses
@@ -20,27 +27,34 @@ export function StartPage(props) {
         props.model.showExpenseInput = true;
     }
 
+    //expense title input
     function handleExpenseTitleInputACB(title) {
         props.model.expenseTitle = title;
     }
 
+    //expense amount input
     function handleExpenseAmountInputACB(value) {
         props.model.expenseAmount = value;
     }
 
+    //choosing who paid
     function handlePaidByChangeACB(person) {
         props.model.paidBy = person;
     }
 
+    //??
     function handleToggleParticipantsACB(person) {
         props.model.toggleParticipants(person);
     }
 
+    //adding a new expense
     function handleAddExpenseACB() {
         props.model.addExpense();
     }
 
+    //cancel adding a new expense
     function handleCancelExpenseACB() {
+        // put this in model function together with resetting input fields: props.model.showExpenseInput = false;
         props.model.cancelExpense();
     }
 
@@ -52,8 +66,9 @@ export function StartPage(props) {
             showPersonInput={props.model.showPersonInput}
             newPerson={props.model.newPerson}
             onShowPersonInput={handleShowPersonInputACB}
-            onPersonInput={handlePersonInputACB}
+            onPersonInputChange={handlePersonInputACB}
             onAddNewPerson={handleAddNewPersonACB}
+            onCancelPerson={handleCancelPersonACB}
 
             showExpenseInput={props.model.showExpenseInput}
             expenseTitle={props.model.expenseTitle}
@@ -65,7 +80,7 @@ export function StartPage(props) {
             onExpenseAmountInput={handleExpenseAmountInputACB}
             onPaidByChange={handlePaidByChangeACB}
             onToggleParticipants={handleToggleParticipantsACB}
-            onAddExpense={handleAddExpenseACB}
+            onAddNewExpense={handleAddExpenseACB}
             onCancelExpense={handleCancelExpenseACB}
         />
     );
