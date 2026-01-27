@@ -5,6 +5,7 @@ export const model = {
     expenses: [],
     showPersonInput: false,
     showExpenseInput: false,
+    showSideBar: false,
     newPerson: "",
     expenseTitle: "",
     expenseAmount: "",
@@ -21,6 +22,7 @@ export const model = {
         this.people.push(name);
         this.newPerson = "";
         this.showPersonInput = false;
+        this.showSideBar = true;
     },
 
     cancelPerson() {
@@ -58,6 +60,7 @@ export const model = {
         this.paidBy = "";
         this.selectedParticipants = [];
         this.showExpenseInput = false;
+        this.showSideBar = true;
     },
 
     cancelExpense() {

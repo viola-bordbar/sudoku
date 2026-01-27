@@ -1,4 +1,5 @@
 import { StartPageView } from "../views/startPageView";
+import { SideBar } from "./sideBarPresenter.jsx";
 
 export function StartPage(props) {
     //show people form
@@ -14,6 +15,7 @@ export function StartPage(props) {
     //adding a new person
     function handleAddNewPersonACB() {
         props.model.addNewPerson();
+        console.log("clicked add person", props.model.showSidebar);
     }
 
     //cancel adding a new person
@@ -59,29 +61,33 @@ export function StartPage(props) {
     }
 
     return (
-        <StartPageView
-            people={props.model.people}
-            expenses={props.model.expenses}
-            
-            showPersonInput={props.model.showPersonInput}
-            newPerson={props.model.newPerson}
-            onShowPersonInput={handleShowPersonInputACB}
-            onPersonInputChange={handlePersonInputACB}
-            onAddNewPerson={handleAddNewPersonACB}
-            onCancelPerson={handleCancelPersonACB}
+        <div>
+            <StartPageView
+                people={props.model.people}
+                expenses={props.model.expenses}
+                
+                showPersonInput={props.model.showPersonInput}
+                newPerson={props.model.newPerson}
+                onShowPersonInput={handleShowPersonInputACB}
+                onPersonInputChange={handlePersonInputACB}
+                onAddNewPerson={handleAddNewPersonACB}
+                onCancelPerson={handleCancelPersonACB}
 
-            showExpenseInput={props.model.showExpenseInput}
-            expenseTitle={props.model.expenseTitle}
-            expenseAmount={props.model.expenseAmount}
-            paidBy={props.model.paidBy}
-            selectedParticipants={props.model.selectedParticipants || []}
-            onShowExpenseInput={handleShowExpenseInputACB}
-            onExpenseTitleInput={handleExpenseTitleInputACB}
-            onExpenseAmountInput={handleExpenseAmountInputACB}
-            onPaidByChange={handlePaidByChangeACB}
-            onToggleParticipants={handleToggleParticipantsACB}
-            onAddNewExpense={handleAddExpenseACB}
-            onCancelExpense={handleCancelExpenseACB}
-        />
+                showExpenseInput={props.model.showExpenseInput}
+                expenseTitle={props.model.expenseTitle}
+                expenseAmount={props.model.expenseAmount}
+                paidBy={props.model.paidBy}
+                selectedParticipants={props.model.selectedParticipants || []}
+                onShowExpenseInput={handleShowExpenseInputACB}
+                onExpenseTitleInput={handleExpenseTitleInputACB}
+                onExpenseAmountInput={handleExpenseAmountInputACB}
+                onPaidByChange={handlePaidByChangeACB}
+                onToggleParticipants={handleToggleParticipantsACB}
+                onAddNewExpense={handleAddExpenseACB}
+                onCancelExpense={handleCancelExpenseACB}
+            />
+
+            {<SideBar model={props.model} /> && props.model.showSidebar}
+        </div>
     );
 }
