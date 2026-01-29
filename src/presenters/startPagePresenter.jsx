@@ -15,7 +15,7 @@ export function StartPage(props) {
     //adding a new person
     function handleAddNewPersonACB() {
         props.model.addNewPerson();
-        console.log("clicked add person", props.model.showSidebar);
+        props.model.showSideBar = true;
     }
 
     //cancel adding a new person
@@ -52,6 +52,7 @@ export function StartPage(props) {
     //adding a new expense
     function handleAddExpenseACB() {
         props.model.addExpense();
+        props.model.showSideBar = true;
     }
 
     //cancel adding a new expense
@@ -65,6 +66,8 @@ export function StartPage(props) {
             <StartPageView
                 people={props.model.people}
                 expenses={props.model.expenses}
+
+                showSideBar={props.model.showSideBar}
                 
                 showPersonInput={props.model.showPersonInput}
                 newPerson={props.model.newPerson}

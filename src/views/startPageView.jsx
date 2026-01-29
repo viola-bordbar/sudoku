@@ -92,61 +92,62 @@ export function StartPageView(props) {
                 </div>
             )}
 
+            {props.showSideBar && (
+                <div>
+                    People: 
+                    {props.people} <br />
+                </div>
+            )}
+
 
             <button onClick={showAddNewExpenseACB}>Add new expense</button>
 
             {props.showExpenseInput && (
                 <div>
-                    <div>
-                        <input
-                            value={props.expenseTitle || ""}
-                            onChange={expenseTitleInputACB}
-                            placeholder="Enter expense title"
-                        />
+                    <input
+                        value={props.expenseTitle || ""}
+                        onChange={expenseTitleInputACB}
+                        placeholder="Enter expense title"
+                    />
 
-                        <input
-                            value={props.expenseAmount || ""}
-                            onChange={expenseAmountInputACB}
-                            placeholder="Enter total amount"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                        />
-
-                        <div>
-                            <label>Paid by</label>
-                            <select value={props.paidBy || ""} onChange={paidByChangeACB}>
-                                <option value="" disabled>
-                                    Select person
-                                </option>
-                                {(props.people || []).map(renderPeopleOptionsCB)}
-                            </select>
-                        </div>
-
-                        <div> 
-                            <div>Select participants</div>
-                            <div>{(props.people || []).map(renderParticipantsForCheckboxCB)}</div>
-                        </div>
-
-                        <button onClick={addNewExpenseACB}>Add</button>
-                        <button onClick={cancelExpenseACB} type="button">Cancel</button>
-                    </div>
+                    <input
+                        value={props.expenseAmount || ""}
+                        onChange={expenseAmountInputACB}
+                        placeholder="Enter total amount"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                    />
 
                     <div>
-                        <div>
-                            People: 
-                            {props.model.people} <br />
-
-                            Expenses: 
-                            {props.model.expenses.length} <br />
-
-                            Total sum of costs: {props.model.sumOfCosts} currency units
-                            Your total to pay: {/* TODO calculate user's total to pay */}
-                        </div>
+                        <label>Paid by</label>
+                        <select value={props.paidBy || ""} onChange={paidByChangeACB}>
+                            <option value="" disabled>
+                                Select person
+                            </option>
+                            {(props.people || []).map(renderPeopleOptionsCB)}
+                        </select>
                     </div>
+
+                    <div> 
+                        <div>Select participants</div>
+                        <div>{(props.people || []).map(renderParticipantsForCheckboxCB)}</div>
+                    </div>
+
+                    <button onClick={addNewExpenseACB}>Add</button>
+                    <button onClick={cancelExpenseACB} type="button">Cancel</button>
                 </div>
-            
             )}
+
+            {/*{props.showSideBar && (
+                <div>
+                    Expenses: 
+                    {props.model.expenses.length} <br />
+
+                    Total sum of costs: {props.model.sumOfCosts} currency units
+                    Your total to pay: {/* TODO calculate user's total to pay
+                </div>
+            )}*/}
 
         </div>
     )
