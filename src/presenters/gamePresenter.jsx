@@ -1,8 +1,8 @@
-import { SideBarView } from "../views/sideBarView";
+import { GameView } from "../views/gameView";
 
-export function SideBar(props) {
+export function Game(props) {
     return (
-            <SideBarView
+            <GameView
                 people={props.model.people}
                 expenses={props.model.expenses}
                 sumOfCosts={props.model.sumOfCosts}

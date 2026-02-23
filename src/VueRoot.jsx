@@ -1,4 +1,5 @@
 import { StartPage } from "./presenters/startPagePresenter.jsx";
+import { Game } from "./presenters/gamePresenter.jsx";
 import { createRouter, createWebHashHistory, RouterView } from "vue-router";
 //import { SuspenseView } from "../views/suspenseView.jsx";
 
@@ -24,7 +25,13 @@ export function makeRouter(model) {
             {
                 path:"/startPage",
                 component:<StartPage model={model}/>,
+            },
+            
+            {
+                path:"/game",
+                component: <Game model={model}/>,
             }
+
         ]
     });
 }

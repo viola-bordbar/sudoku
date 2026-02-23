@@ -1,5 +1,5 @@
 import { reactive  } from "vue";
-import {model} from "./model/app.js";
+import {model} from "./model/game.js";
 
 export const reactiveModel= reactive(model);
 
