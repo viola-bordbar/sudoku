@@ -29,6 +29,10 @@ body {
     box-sizing: border-box;
 }
 
+.cell.selected {
+    background-color: lightblue;
+}
+
 /***** Bottom bar (available numbers & buttons) *****/
 .bottom-bar {
     margin-top: 14px;

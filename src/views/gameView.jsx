@@ -1,6 +1,7 @@
+import { boxCellToRowCol } from "../model/utilities";
 import "/src/style.css";
 
-export function GameView() {
+export function GameView(props) {
 
     function numberLineCB(n) {
         return(
@@ -10,15 +11,33 @@ export function GameView() {
         );
     }
 
-    function renderCellCB(_, cellIndex) {
-        return <div key={cellIndex} className="cell"/>
+    function cellClickACB(boxIndex, cellIndex) {
+        return function() {
+            props.onCellClick(boxIndex, cellIndex);
+        }
+    }
+
+    function renderCellCB(boxIndex) {
+        return function(_, cellIndex) {
+            const {row, col} = boxCellToRowCol(boxIndex, cellIndex);
+            const isSelected = props.selectedCell != null &&
+            props.selectedCell.row === row &&
+            props.selectedCell.col === col;
+
+            return (
+                <div 
+                    key={cellIndex} 
+                    className={isSelected ? "cell selected" : "cell"}
+                    onClick={cellClickACB(boxIndex, cellIndex)}
+                />
+            );
+        }
     }
 
     function renderBoxCB(_, boxIndex) {
         return(
             <div key={boxIndex} className="box">
-                {Array(9).fill(null).map(renderCellCB)}
-
+                {Array(9).fill(null).map(renderCellCB(boxIndex))}
             </div>
         );
     }
