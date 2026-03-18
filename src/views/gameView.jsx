@@ -3,10 +3,24 @@ import "/src/style.css";
 
 export function GameView(props) {
 
+    function eraseCB() {
+        props.onErase();
+    }
+
+    function undoCB() {
+        props.onUndo();
+    }
+
+    function numberClickCB(n) {
+        return function() {
+            props.onNumberClick(n);
+        }
+    }
+
     function numberLineCB(n) {
         return(
             <span key={n}>
-                <button className="nums-bottom">{n}</button>
+                <button className="nums-bottom" onClick={numberClickCB(n)}>{n}</button>
             </span>
         );
     }
@@ -29,7 +43,9 @@ export function GameView(props) {
                     key={cellIndex} 
                     className={isSelected ? "cell selected" : "cell"}
                     onClick={cellClickACB(boxIndex, cellIndex)}
-                />
+                >
+                    {props.board[row][col] || ""}
+                </div>
             );
         }
     }
@@ -53,8 +69,8 @@ export function GameView(props) {
                 </div>
            
                 <div>
-                    <button>Undo</button>
-                    <button>Erase</button>
+                    <button onClick={undoCB}>Undo</button>
+                    <button onClick={eraseCB}>Erase</button>
                     <button>Notes</button>
                     <button>Hint</button>
                 </div>
