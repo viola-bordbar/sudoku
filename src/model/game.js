@@ -24,6 +24,7 @@ export const model = {
     board: testPuzzle.map(r => [...r]),
     givenCells: testPuzzle,
     selectedCell: null,
+    invalidCell: null,
     history: [],
     status: "playing"
 };

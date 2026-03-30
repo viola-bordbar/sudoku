@@ -44,6 +44,10 @@ body {
     background-color: lightblue;
 }
 
+.cell.invalid {
+    background-color: #ffcccc;
+}
+
 /***** Bottom bar (available numbers & buttons) *****/
 .bottom-bar {
     margin-top: 14px;

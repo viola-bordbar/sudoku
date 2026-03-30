@@ -12,8 +12,14 @@ export function Game(props) {
         if(props.model.selectedCell == null) return;
         const {row, col} = props.model.selectedCell;
 
-        if(!isValidPlacement(props.model.board, row, col, n)) return;
-        props.model.history.push(props.model.board.map(copyRow));
+        if(!isValidPlacement(props.model.board, row, col, n)) {
+            console.log("invalid placement", row, col, n);
+            props.model.invalidCell = {row, col};
+            return;
+        } else {
+            props.model.invalidCell = null;
+            props.model.history.push(props.model.board.map(copyRow));
+        }
 
         if(props.model.board[row][col] === n) {
             props.model.board[row][col] = null;
@@ -32,8 +38,10 @@ export function Game(props) {
 
     function handleUndoACB() {
         if(props.model.history.length === 0) return;
-        props.model.board = props.model.history.pop();
-        //TODO
+        const previousBoard = props.model.history.pop();
+        props.model.board.forEach(function(row, i) {
+            props.model.board[i] = previousBoard[i];
+        });
     }
 
     return (
@@ -43,6 +51,7 @@ export function Game(props) {
             onErase={handleEraseACB}
             onUndo={handleUndoACB}
             selectedCell={props.model.selectedCell}
+            invalidCell={props.model.invalidCell}
             board={props.model.board}
         />
     );
