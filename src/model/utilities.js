@@ -18,12 +18,68 @@ export function isValidPlacement(board, row, col, num) {
     return true;
 }
 
-export function isBoardComplete() {
-   //Full recheck needed? or possible to combine with isValidPlacement?
+export function createBoard() {
+    return Array(9).fill(null).map(createRow);
 }
 
+export function createRow() {
+    return Array(9).fill(0);
+}
+
+//loop through board to find an empty cell (0)
+export function findEmptyCell(board) {
+    for(let i = 0; i < 9; i++) {
+        for(let j = 0; j < 9; j++) {
+            if(board[i][j] == 0) return {row: i, col: j};
+        }
+    }
+
+    return null;
+}
+
+export function solveBoard(board) {
+    //find an empty cell
+    const emptyCell = findEmptyCell(board);
+    if(emptyCell == null) return true; 
+
+    //when empty cell is found, try placing numbers 1-9 in it and check if valid
+    const {row, col} = emptyCell;
+    for(let num = 1; num <= 9; num++) {
+        if(isValidPlacement(board, row, col, num)) {
+            board[row][col] = num; 
+            if(solveBoard(board)) return true;
+            board[row][col] = 0;
+        }
+    }
+
+    return false;
+}
+
+//create a board solution by filling in an empty board with solveBoard
+export function generateBoardSolution() {
+    const board = createBoard();
+    solveBoard(board);
+    return board; 
+}
+
+//create a puzzle by removing numbers from the solution board, making sure there is an existing solution
 export function generatePuzzle() {
-    //Logic for pre-filled cells, randomized placement & number
+    const solution = generateBoardSolution();
+    const puzzle = solution.map(copyRow); 
+
+    let cellsToRemove = 40;
+    while(cellsToRemove > 0) {
+        const row = Math.floor(Math.random() * 9);
+        const col = Math.floor(Math.random() * 9);
+
+        if(puzzle[row][col] !== 0) {
+            puzzle[row][col] = 0;
+            cellsToRemove--;
+        }
+    }
+
+    return {puzzle, solution};
+
 }
 
 export function copyRow(r) {

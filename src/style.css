@@ -77,3 +77,30 @@ body {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.title {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 50px
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 20px;
+}
+
+.startbutton {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: 1px solid #bbb;
+    background: white;
+    cursor: pointer;
+}
+
+.cell.highlighted {
+    background-color: #e8f0fe;
+}

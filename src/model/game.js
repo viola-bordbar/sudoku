@@ -1,12 +1,9 @@
-import {} from "./utilities.js";
+import {createBoard, createRow} from "./utilities.js";
+import { generatePuzzle } from "./utilities.js";
 
-function createRow() {
-    return Array(9).fill(0);
-}
-
-function createBoard() {
-    return Array(9).fill(null).map(createRow);
-}
+    const { puzzle, solution } = generatePuzzle();
+    console.log("puzzle", puzzle);
+    console.log("solution", solution);
 
 export const testPuzzle = [
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
@@ -26,7 +23,7 @@ export const model = {
     selectedCell: null,
     invalidCell: null,
     history: [],
-    status: "playing"
+    status: "playing",
 };
 
 /*export const model = {

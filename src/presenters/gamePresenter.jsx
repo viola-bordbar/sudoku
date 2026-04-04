@@ -13,9 +13,8 @@ export function Game(props) {
         const {row, col} = props.model.selectedCell;
 
         if(!isValidPlacement(props.model.board, row, col, n)) {
-            console.log("invalid placement", row, col, n);
             props.model.invalidCell = {row, col};
-            return;
+            props.model.selectedCell = {row, col};
         } else {
             props.model.invalidCell = null;
             props.model.history.push(props.model.board.map(copyRow));

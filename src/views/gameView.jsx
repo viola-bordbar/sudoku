@@ -35,19 +35,28 @@ export function GameView(props) {
         return function(_, cellIndex) {
             const {row, col} = boxCellToRowCol(boxIndex, cellIndex);
 
-            const isSelected = props.selectedCell != null &&
-            props.selectedCell.row === row &&
-            props.selectedCell.col === col;
-
             const isInvalid = props.invalidCell != null &&
             props.invalidCell != undefined &&
             props.invalidCell.row === row &&
             props.invalidCell.col === col;
 
+            const isSelected = props.selectedCell != null &&
+            props.selectedCell.row === row &&
+            props.selectedCell.col === col;
+
+            const isHighlighted = props.selectedCell != null && 
+            (props.selectedCell.row === row || 
+            props.selectedCell.col === col);
+
             return (
                 <div 
                     key={cellIndex} 
-                    className={isSelected ? "cell selected" : isInvalid ? "cell invalid" : "cell"}
+                    className={
+                        isInvalid ? "cell invalid" : 
+                        isSelected ? "cell selected" : 
+                        isHighlighted ? "cell highlighted" : 
+                        "cell"
+                    }
                     onClick={cellClickACB(boxIndex, cellIndex)}
                 >
                     {props.board[row][col] || ""}

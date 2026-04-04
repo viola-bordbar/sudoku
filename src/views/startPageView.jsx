@@ -6,13 +6,15 @@ export function StartPageView(props) {
 
     return (
         <div>
-            <h1>Sudoku</h1>
+            <h1 className="title">Sudoku</h1>
 
-            <p>
+            <p className="subtitle">
                 Play sudoku and relax!
             </p>
 
-            <button onClick={startGameACB}>Start new game</button>
+            <button className="startbutton" onClick={startGameACB}>
+                Start new game
+            </button>
 
         </div>
     )
