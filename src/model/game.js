@@ -1,36 +1,47 @@
-import {createBoard, createRow} from "./utilities.js";
-import { generatePuzzle } from "./utilities.js";
+import {createBoard, createRow, generatePuzzle, loadGame, createNotes} from "./utilities.js";
 
+const saved = loadGame();
+
+let initialState;
+
+if (saved) {
+    initialState = {
+        ...saved,
+        notes: saved.notes ?? createNotes(),
+        notesMode: saved.notesMode ?? false,
+    };
+} else {
     const { puzzle, solution } = generatePuzzle();
-    console.log("puzzle", puzzle);
-    console.log("solution", solution);
 
-export const testPuzzle = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-];
+    initialState = {
+        board: puzzle.map(row => [...row]),
+        givenCells: puzzle,
+        solution,
+        selectedCell: null,
+        invalidCell: null,
+        history: [],
+        status: "playing",
+        message: "",
+        messageType: "",
+        notes: createNotes(),
+        notesMode: false,
+    };
+}
 
-export const model = {
-    board: testPuzzle.map(r => [...r]),
-    givenCells: testPuzzle,
-    selectedCell: null,
-    invalidCell: null,
-    history: [],
-    status: "playing",
-};
+export const model = initialState;
 
-/*export const model = {
-    board: createBoard(),
-    solution: null, //completed board / "facit"
-    givenCells: [], //pre-filled cells (can not be edited)
-    selectedCell: null, // {row, col}
-    history: [], //for undo
-    status: "playing",
-};*/
+export function startNewGame(model, difficulty) {
+    const { puzzle, solution } = generatePuzzle(difficulty);
+
+    model.board = puzzle.map(row => [...row]);
+    model.givenCells = puzzle;
+    model.solution = solution;
+    model.selectedCell = null;
+    model.invalidCell = null;
+    model.history = [];
+    model.status = "playing";
+    model.message = "";
+    model.messageType = "";
+    model.notes = createNotes();
+    model.notesMode = false;
+}

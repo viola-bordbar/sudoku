@@ -2,10 +2,8 @@ import { StartPage } from "./presenters/startPagePresenter.jsx";
 import { Game } from "./presenters/gamePresenter.jsx";
 import { createRouter, createWebHashHistory, RouterView } from "vue-router";
 import { reactiveModel } from "./vueReactiveModel.js";
-//import { SuspenseView } from "../views/suspenseView.jsx";
 
-
-export function VueRoot(){
+export function VueRoot() {
     return(
         <div>
             <RouterView/>
