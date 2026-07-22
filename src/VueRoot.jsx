@@ -1,8 +1,8 @@
 import { StartPage } from "./presenters/startPagePresenter.jsx";
 import { Game } from "./presenters/gamePresenter.jsx";
 import { createRouter, createWebHashHistory, RouterView } from "vue-router";
-import { reactiveModel } from "./vueReactiveModel.js";
 
+//Root component for the Vue app, rendering the current view based on the router state
 export function VueRoot() {
     return(
         <div>

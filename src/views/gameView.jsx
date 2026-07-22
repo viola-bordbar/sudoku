@@ -3,20 +3,29 @@ import "/src/style.css";
 
 export function GameView(props) {
 
+    //Forwards an erase click to the presenter
     function eraseCB() {
         props.onErase();
     }
 
+    //Forwards an undo click to the presenter
     function undoCB() {
         props.onUndo();
     }
 
+    //Forwards a notes toggle click to the presenter
+    function notesToggleCB() {
+        props.onNotesToggle();
+    }
+
+    //Returns a click handler for a number, used for the number pad buttons
     function numberClickCB(n) {
         return function() {
             props.onNumberClick(n);
         }
     }
 
+    //Renders a number button in the number pad 
     function numberLineCB(n) {
         return (
             <button
@@ -29,23 +38,27 @@ export function GameView(props) {
         );
     }
 
+    //Returns a click handler for a cell, used for the board cells
     function cellClickACB(boxIndex, cellIndex) {
         return function() {
             props.onCellClick(boxIndex, cellIndex);
         }
     }
 
+    //Renders a cell in the board, determining its value, notes, and styling based on the current game state
     function renderCellCB(boxIndex) {
         return function(_, cellIndex) {
             const {row, col} = boxCellToRowCol(boxIndex, cellIndex);
             const cellValue = props.board[row][col];
             const cellNotes = props.notes?.[row]?.[col] ?? [];
 
+            //True if the cell is invalid, meaning it was filled with an incorrect number
             const isInvalid = props.invalidCell != null &&
             props.invalidCell != undefined &&
             props.invalidCell.row === row &&
             props.invalidCell.col === col;
 
+            //True if the cell is the currently selected cell
             const isSelected = props.selectedCell != null &&
             props.selectedCell.row === row &&
             props.selectedCell.col === col;
@@ -54,6 +67,7 @@ export function GameView(props) {
             rowColToBox(props.selectedCell.row, props.selectedCell.col) : 
             null;
 
+            //True if the cell is in the same row, column, or box as the selected cell
             const isHighlighted = props.selectedCell != null && 
             (props.selectedCell.row === row || 
             props.selectedCell.col === col ||
@@ -63,6 +77,7 @@ export function GameView(props) {
             props.board[props.selectedCell.row][props.selectedCell.col] : 
             null;
 
+            //True if the cell has the same value as the selected cell, used for highlighting similar numbers
             const isSameValue = !!selectedValue &&
             props.board[row][col] === selectedValue;
 
@@ -83,6 +98,7 @@ export function GameView(props) {
                     {cellValue ? (
                         cellValue
                     ) : (
+                        //If the cell is empty, render its notes if any
                         <div className="notes-grid">
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(noteNumber => (
                                 <span key={noteNumber}>
@@ -96,16 +112,13 @@ export function GameView(props) {
         }
     }
 
+    //Renders a 3x3 box in the board, containing 9 cells
     function renderBoxCB(_, boxIndex) {
         return(
             <div key={boxIndex} className="box">
                 {Array(9).fill(null).map(renderCellCB(boxIndex))}
             </div>
         );
-    }
-
-    function notesToggleCB() {
-        props.onNotesToggle();
     }
 
     return (
@@ -158,6 +171,7 @@ export function GameView(props) {
 
                         <div className="number-pad">
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            //Only show numbers that have not been completed on the board
                             .filter(n => !isNumberComplete(props.board, n))
                             .map(numberLineCB)}
                         </div>

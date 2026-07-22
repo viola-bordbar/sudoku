@@ -1,9 +1,11 @@
 import {createBoard, createRow, generatePuzzle, loadGame, createNotes} from "./utilities.js";
 
+//Load the saved game from localStorage if it exists
 const saved = loadGame();
 
 let initialState;
 
+//If a saved game exists, use it as the initial state; otherwise, generate a new puzzle
 if (saved) {
     initialState = {
         ...saved,
@@ -28,8 +30,10 @@ if (saved) {
     };
 }
 
+//The reactive game state shared across the app
 export const model = initialState;
 
+//Starts a new game with the specified difficulty, resetting the model state and generating a new puzzle
 export function startNewGame(model, difficulty) {
     const { puzzle, solution } = generatePuzzle(difficulty);
 

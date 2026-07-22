@@ -1,11 +1,13 @@
 export function StartPageView(props) {
 
+    //Returns a click handler for starting a new game with the given difficulty
     function startGameACB(difficulty) {
         return function () {
             props.onStartGame(difficulty);
         };
     }
 
+    //Forwards a continue game click to the presenter
     function continueGameACB() {
         props.onContinueGame();
     }
@@ -37,6 +39,7 @@ export function StartPageView(props) {
                 </p>
 
                 <div className="start-buttons">
+                    {/* Only shown if there is a saved game to resume */}
                     {props.showContinue && (
                         <button
                             className="menu-btn primary-btn"

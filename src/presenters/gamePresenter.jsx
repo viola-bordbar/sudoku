@@ -6,6 +6,7 @@ export function Game(props) {
 
     const router = useRouter();
 
+    //Selects a cell when a player clicks on it, converting the box and cell indices to row and column indices
     function handleCellClickACB(boxIndex, cellIndex) {
         const { row, col } = boxCellToRowCol(boxIndex, cellIndex);
 
@@ -17,6 +18,9 @@ export function Game(props) {
         saveGame(props.model);
     }
 
+    //Handles a number button click, either placing/removing the number in the selected cell or adding/removing it from the notes, 
+    //depending on the current mode. It also checks wether the placement is correct and updates the game state accordingly, 
+    //including checking for puzzle completion.
     function handleNumberClickACB(n) {
         if (props.model.selectedCell == null) {
             props.model.message = "Select a cell first.";
@@ -45,6 +49,7 @@ export function Game(props) {
             const cellNotes = props.model.notes[row][col];
             const noteIndex = cellNotes.indexOf(n);
 
+            //If the note doesn't exist, add it; if it does, remove it
             if (noteIndex === -1) {
                 cellNotes.push(n);
                 cellNotes.sort((a, b) => a - b);
@@ -63,6 +68,7 @@ export function Game(props) {
         //Normal number mode
         saveHistory();
 
+        //If the number is already in the cell, remove it
         if (props.model.board[row][col] === n) {
             props.model.board[row][col] = null;
             props.model.invalidCell = null;
@@ -83,6 +89,7 @@ export function Game(props) {
         if (isCorrect) {
             props.model.invalidCell = null;
 
+            //Check if the puzzle is complete after placing the number
             if (isPuzzleComplete(props.model.board, props.model.solution)) {
                 props.model.status = "completed";
                 props.model.message = "Puzzle completed! Great job!";
@@ -108,6 +115,7 @@ export function Game(props) {
         saveGame(props.model);;
     }
 
+    //Handles the erase button click, clearing the selected cell if it's not a given cell
     function handleEraseACB() {
         if (props.model.selectedCell == null) return;
         const { row, col } = props.model.selectedCell;
@@ -123,6 +131,7 @@ export function Game(props) {
         saveGame(props.model);
     }
 
+    //Handles the undo button click, reverting the game state to the previous state saved in history if available
     function handleUndoACB() {
         if (props.model.history.length === 0) return;
 
@@ -138,6 +147,7 @@ export function Game(props) {
         saveGame(props.model);
     }
 
+    //Saves the current board and notes state to the history stack for undo functionality
     function saveHistory() {
         props.model.history.push({
             board: props.model.board.map(copyRow),
@@ -145,6 +155,7 @@ export function Game(props) {
         });
     }
 
+    //Handles the notes toggle button click, switching between normal number mode and notes mode
     function handleNotesToggleACB() {
         props.model.notesMode = !props.model.notesMode;
         props.model.message = props.model.notesMode
